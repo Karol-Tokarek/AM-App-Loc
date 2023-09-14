@@ -13,6 +13,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -30,18 +31,18 @@ public class MainActivity extends AppCompatActivity {
 
     private String getAddressFrom(double latitude, double longitude) {
         geocoder = new Geocoder(this, Locale.getDefault());
-String result = "Geolocation address:\n";
-try {
-List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-for (Address address : addresses) {
-for (int i = 0, j = address.getMaxAddressLineIndex(); i <= j; i++) {
-result += address.getAddressLine(i) + "\n";
-}
-result += "\n\n";
-}
-} catch (IOException e) {
-}
-return result;
+        String result = "Geolocation address:\n";
+        try {
+        List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+        for (Address address : addresses) {
+        for (int i = 0, j = address.getMaxAddressLineIndex(); i <= j; i++) {
+        result += address.getAddressLine(i) + "\n";
+        }
+        result += "\n\n";
+        }
+    } catch (IOException e) {
+    }
+    return result;
 
     }
 
@@ -64,6 +65,7 @@ return result;
                 he = Double.parseDouble(height);
                 wi = Double.parseDouble(width);
 
+
                 h = (TextView) findViewById(R.id.textViewHeight);
                 h.setText("Wysokosc"+height);
 
@@ -71,7 +73,7 @@ return result;
                 w.setText("Szerokosc"+width);
 
                 h.setText(String.valueOf(getAddressFrom(wi, he)).toString());
-
+                Log.d("LONG, LAT", wi + " : " + he);
 
 
 
@@ -118,8 +120,8 @@ return result;
             @Override
             public void onClick(View v) {
 
-               Intent intent = new Intent(MainActivity.this, ShowMap.class);
-                MainActivity.this.startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), ShowMap.class);
+                startActivity(intent);
             }
 
 
