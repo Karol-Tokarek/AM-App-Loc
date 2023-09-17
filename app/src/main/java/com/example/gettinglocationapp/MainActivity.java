@@ -2,6 +2,7 @@ package com.example.gettinglocationapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.content.Context;
@@ -27,24 +28,8 @@ public class MainActivity extends AppCompatActivity {
     public LocationManager loc;
     private TextView h, w;
     private Geocoder geocoder;
+    private DrawerLayout drawerLayout;
     private double he, wi;
-
-    private String getAddressFrom(double latitude, double longitude) {
-        geocoder = new Geocoder(this, Locale.getDefault());
-        String result = "Geolocation address:\n";
-        try {
-        List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-        for (Address address : addresses) {
-        for (int i = 0, j = address.getMaxAddressLineIndex(); i <= j; i++) {
-        result += address.getAddressLine(i) + "\n";
-        }
-        result += "\n\n";
-        }
-    } catch (IOException e) {
-    }
-    return result;
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,69 +37,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button showMap = (Button)findViewById(R.id.buttonShowMap);
-        Button start = (Button)findViewById(R.id.buttonstart);
-        Button stop = (Button)findViewById(R.id.buttonstop);
+        Button btnLog = (Button)findViewById(R.id.buttonShowMap2);
+        Button btnHistory = (Button)findViewById(R.id.buttonShowMap3);
+
 
         loc = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
-        LocationListener listener = new LocationListener() {
-            @Override
-            public void onLocationChanged(@NonNull Location location) {
-                String width = String.valueOf(location.getLatitude());
-                String height = String.valueOf(location.getLongitude());
-                he = Double.parseDouble(height);
-                wi = Double.parseDouble(width);
-
-
-                h = (TextView) findViewById(R.id.textViewHeight);
-                h.setText("Wysokosc"+height);
-
-                w = (TextView) findViewById(R.id.textViewWidth);
-                w.setText("Szerokosc"+width);
-
-                h.setText(String.valueOf(getAddressFrom(wi, he)).toString());
-                Log.d("LONG, LAT", wi + " : " + he);
-
-
-
-            }
-
-
-
-
-
-        };
-
-        start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                        checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 0);
-                    return;  /////pobieranie permisji (komunikat czy dajesz permisje aplikacji)
-                }
-                start.setEnabled(false); //blokowanie przyciskow
-                stop.setEnabled(true);
-                loc.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) listener);
-                //wlaczanie gpsa !!
-
-
-            }
-        });
-
-        stop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                start.setEnabled(true);
-                stop.setEnabled(false); ///blokowanie przyciskow
-                loc.removeUpdates((LocationListener) listener);
-                ///blokowanie zbierania GPSa
-
-            }
-
-
-        });
 
         showMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +55,29 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        //private TextView szerokosc, wysokosc
+        btnLog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(), LogIn.class);
+                startActivity(intent);
+            }
+
+
+        });
+
+        btnHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(), HistoryMap.class);
+                startActivity(intent);
+
+            }
+
+
+        });
+
 
     }
 }

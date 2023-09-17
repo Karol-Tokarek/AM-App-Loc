@@ -3,76 +3,154 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/red"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textViewHeight"
-        android:layout_width="324dp"
-        android:layout_height="94dp"
-        android:layout_marginStart="43dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="19dp"
-        android:text="Wysokość:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/textViewWidth"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonstop" />
+<!--    <TextView-->
+<!--        android:id="@+id/textViewHeight"-->
+<!--        android:layout_width="324dp"-->
+<!--        android:layout_height="94dp"-->
+<!--        android:layout_marginStart="43dp"-->
+<!--        android:layout_marginTop="27dp"-->
+<!--        android:layout_marginEnd="44dp"-->
+<!--        android:layout_marginBottom="19dp"-->
+<!--        android:text="Wysokość:"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/textViewWidth"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/buttonstop" />-->
 
-    <TextView
-        android:id="@+id/textViewWidth"
-        android:layout_width="324dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="43dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="44dp"
-        android:text="Szerokość"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHeight" />
+<!--    <TextView-->
+<!--        android:id="@+id/textViewWidth"-->
+<!--        android:layout_width="324dp"-->
+<!--        android:layout_height="43dp"-->
+<!--        android:layout_marginStart="43dp"-->
+<!--        android:layout_marginTop="68dp"-->
+<!--        android:layout_marginEnd="44dp"-->
+<!--        android:text="Szerokość"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textViewHeight" />-->
 
-    <Button
-        android:id="@+id/buttonstart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="158dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="165dp"
-        android:layout_marginBottom="11dp"
-        android:text="START"
-        app:layout_constraintBottom_toTopOf="@+id/buttonstop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <Button-->
+<!--        android:id="@+id/buttonstart"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="158dp"-->
+<!--        android:layout_marginTop="44dp"-->
+<!--        android:layout_marginEnd="165dp"-->
+<!--        android:layout_marginBottom="11dp"-->
+<!--        android:text="START"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/buttonstop"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <Button
-        android:id="@+id/buttonstop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="158dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="165dp"
-        android:text="STOP"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonstart" />
+<!--    <Button-->
+<!--        android:id="@+id/buttonstop"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="158dp"-->
+<!--        android:layout_marginTop="11dp"-->
+<!--        android:layout_marginEnd="165dp"-->
+<!--        android:text="STOP"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/buttonstart" />-->
 
     <Button
         android:id="@+id/buttonShowMap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="303dp"
+        android:layout_height="61dp"
         android:layout_marginStart="158dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="41dp"
         android:layout_marginEnd="165dp"
-        android:layout_marginBottom="267dp"
-        android:text="POKAŻ NA MAPIE"
+        android:layout_marginBottom="244dp"
+        android:text="POKAŻ LOKALIZACJĘ NA MAPIE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewWidth" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <Button
+        android:id="@+id/buttonShowMap2"
+        android:layout_width="303dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="158dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="165dp"
+        android:layout_marginBottom="176dp"
+        android:text="ZALOGUJ / ZAREJESTRUJ SIĘ"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonShowMap" />
+
+    <Button
+        android:id="@+id/buttonShowMap3"
+        android:layout_width="303dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="158dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="165dp"
+        android:layout_marginBottom="108dp"
+        android:text="PRZEJRZYJ LOKALNIE ZAPISANE LOKACJE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.46"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonShowMap2" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="14dp"
+        android:text="Witaj w PixyGPS! "
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textSize="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="14dp"
+        android:text="Witaj w PixyGPS! "
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/txt"
+        android:textSize="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="292dp"
+        android:layout_height="289dp"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:srcCompat="@drawable/logo" />
+    <!--        app:layout_constraintTop_toBottomOf="@+id/textViewWidth" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>
