@@ -14,7 +14,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,7 +83,7 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
     FloatingActionButton floatingbtn;
     FloatingActionButton floatingbtn2;
     Button searchbtn;
-    Button btntracking;
+    Switch btntracking;
     FloatingActionButton savebtn;
     Button wyznacztrasebtn;
     double distance = 0;
@@ -145,33 +147,37 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
         floatingbtn = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         floatingbtn2 = (FloatingActionButton) findViewById(R.id.floatingActionButton2);
         mLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        btntracking = (Button) findViewById(R.id.button3);
+        btntracking = (Switch) findViewById(R.id.switch1);
         savebtn = (FloatingActionButton) findViewById(R.id.floatingActionButton3);
         searchbtn = (Button) findViewById(R.id.button2);
         wyznacztrasebtn = (Button) findViewById(R.id.button);
         txtkm = (TextView) findViewById(R.id.textView3);
 
-        btntracking.setOnClickListener(new View.OnClickListener(){
+        btntracking.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                if(tracking== false) {
-                    tracking = true;
-                    btntracking.setText("NIE ŚLEDŹ");
-                }
-                else{
-                    tracking = false;
-                    btntracking.setText("ŚLEDŹ");
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                }
+                    if(tracking==false) {
+                        btntracking.setChecked(true);
+                        tracking = true;
+                    }else{
+                        btntracking.setChecked(false);
+                        tracking = false;
+                    }
+
+
             }
+
+
         });
+
 
 
 
         wyznacztrasebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tracking = true;
+                //tracking = true;
                 double addressfromlat = 0;
                 double addressfromlang = 0;
                 double addresstolat = 0;
@@ -255,7 +261,7 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
         searchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tracking = false;
+                //tracking = false;
                 EditText ed = (EditText)findViewById(R.id.editTextTextPersonName);
                 String street = String.valueOf(ed.getText());
                 mGoogleMap.clear();
@@ -300,8 +306,8 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
     }
 
     private void drawRoute(LatLng origin, LatLng destination) {
-        btntracking.setText("NIE ŚLEDŹ");
-        tracking = true;
+//        tracking = true;
+        //btntracking.setChecked(true);
         geoApiContext = new GeoApiContext.Builder()
                 .apiKey("AIzaSyC9ityMjHyHQXh0VPj0EmR0-LblJrTKR1o")
                 .build();
@@ -345,16 +351,15 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
 
     @SuppressLint("MissingPermission")
     private void getCurrLoc() {
-        EditText ed = (EditText)findViewById(R.id.editTextTextPersonName);
-        mLocationClient.getLastLocation().addOnCompleteListener(task ->{
-            if(task.isSuccessful())
-            {
-                Location loc = task.getResult();
-                address = getAddressFrom(loc.getLatitude(), loc.getLongitude());
-                gotolocation(loc.getLatitude(), loc.getLongitude());
-                ed.setText(address);
-            }
-        });
+            EditText ed = (EditText) findViewById(R.id.editTextTextPersonName);
+            mLocationClient.getLastLocation().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Location loc = task.getResult();
+                    address = getAddressFrom(loc.getLatitude(), loc.getLongitude());
+                    gotolocation(loc.getLatitude(), loc.getLongitude());
+                    ed.setText(address);
+                }
+            });
 
     }
 
@@ -381,7 +386,7 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
         mGoogleMap = googleMap;
         mGoogleMap.setMyLocationEnabled(true);
         locationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, (float) 0.01, this);
 
        // mGoogleMap.setTrafficEnabled(true);
         mGoogleMap.getUiSettings().setCompassEnabled(true);

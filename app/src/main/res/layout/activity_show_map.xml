@@ -127,26 +127,6 @@
         app:rippleColor="@color/black" />
 
     <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="500dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="16dp"
-
-        android:layout_marginBottom="180dp"
-        android:text="ŚLEDŹ"
-        app:backgroundTint="@color/teal_200"
-        app:iconTint="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/map"
-        app:layout_constraintHorizontal_bias="0.796"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map"
-        app:layout_constraintVertical_bias="0.667"
-        app:rippleColor="@color/black" />
-
-    <Button
         android:id="@+id/button2"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -183,7 +163,22 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/map"
-        app:layout_constraintVertical_bias="0.548" /><![CDATA[
+        app:layout_constraintVertical_bias="0.548" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="170dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="210dp"
+        android:minHeight="48dp"
+        android:text="ŚLEDŹ ON/OFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/map"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map" /><![CDATA[
 
     android:hint="Wpisz lokalizację, którą szukasz"
         android:inputType="textPersonName"
