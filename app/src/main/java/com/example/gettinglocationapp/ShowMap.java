@@ -34,6 +34,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -63,6 +64,7 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
                 result += "";
             }
         } catch (IOException e) {
+
         }
         return result;
 
@@ -79,6 +81,7 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
     FloatingActionButton floatingbtn;
     FloatingActionButton floatingbtn2;
     Button searchbtn;
+    Button btntracking;
     FloatingActionButton savebtn;
     Button wyznacztrasebtn;
     double distance = 0;
@@ -86,6 +89,7 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
     public double lat;
     String address;
     GoogleMap mGoogleMap;
+    public boolean tracking = false;
     GoogleApiClient mGoogleApiClient;
     TextView txtkm;
     LocationManager locationManager;
@@ -135,21 +139,39 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
 
         checkMyPermission();
 
-            SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-            supportMapFragment.getMapAsync(this);
+        SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        supportMapFragment.getMapAsync(this);
 
         floatingbtn = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         floatingbtn2 = (FloatingActionButton) findViewById(R.id.floatingActionButton2);
         mLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        btntracking = (Button) findViewById(R.id.button3);
         savebtn = (FloatingActionButton) findViewById(R.id.floatingActionButton3);
         searchbtn = (Button) findViewById(R.id.button2);
         wyznacztrasebtn = (Button) findViewById(R.id.button);
-         txtkm = (TextView) findViewById(R.id.textView3);
+        txtkm = (TextView) findViewById(R.id.textView3);
+
+        btntracking.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if(tracking== false) {
+                    tracking = true;
+                    btntracking.setText("NIE ŚLEDŹ");
+                }
+                else{
+                    tracking = false;
+                    btntracking.setText("ŚLEDŹ");
+
+                }
+            }
+        });
+
 
 
         wyznacztrasebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tracking = true;
                 double addressfromlat = 0;
                 double addressfromlang = 0;
                 double addresstolat = 0;
@@ -222,7 +244,9 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
         floatingbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(checkifgpson()==true) {
+                    tracking = false;
                     getCurrLoc();
                 }
             }
@@ -231,9 +255,10 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
         searchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tracking = false;
                 EditText ed = (EditText)findViewById(R.id.editTextTextPersonName);
                 String street = String.valueOf(ed.getText());
-
+                mGoogleMap.clear();
                 Geocoder geocoder2 = new Geocoder(getApplicationContext());
                 List<Address> addresslist;
 
@@ -245,6 +270,7 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
                         double longitude = addresslist.get(0).getLongitude();
                         address = getAddressFrom(lat, longitude);
                         gotolocation(lat, longitude);
+                        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(lat, longitude)).title("Punkt: " + address));
 
 
 
@@ -274,6 +300,8 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
     }
 
     private void drawRoute(LatLng origin, LatLng destination) {
+        btntracking.setText("NIE ŚLEDŹ");
+        tracking = true;
         geoApiContext = new GeoApiContext.Builder()
                 .apiKey("AIzaSyC9ityMjHyHQXh0VPj0EmR0-LblJrTKR1o")
                 .build();
@@ -284,9 +312,10 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
                 .destination(new com.google.maps.model.LatLng(destination.latitude, destination.longitude))
                 .awaitIgnoreError(); // Oczekiwanie na wynik z Directions API
 
+        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(destination.latitude, destination.longitude)).title("Punkt końcowy"));
+
         if (directionsResult != null) {
             long distanceInMeters = directionsResult.routes[0].legs[0].distance.inMeters;
-
             double distanceInKilometers = distanceInMeters / 1000.0;
 
             Toast.makeText(getApplicationContext(), "Długość trasy: " + String.valueOf(distanceInKilometers) + " km", Toast.LENGTH_SHORT).show();
@@ -309,6 +338,7 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
             LatLngBounds bounds = builder.build();
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 50);
             mGoogleMap.animateCamera(cameraUpdate);
+
         }
     }
 
@@ -353,7 +383,8 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
         locationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
 
-        //mGoogleMap.setTrafficEnabled(true);
+       // mGoogleMap.setTrafficEnabled(true);
+        mGoogleMap.getUiSettings().setCompassEnabled(true);
         mLocationClient.getLastLocation().addOnSuccessListener(this, location ->{
 
            if(location != null)
@@ -423,18 +454,19 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
     @Override
     public void onLocationChanged(@NonNull Location location) {
 
-     //  getCurrLoc();
+        if(tracking == true) {
+            getCurrLoc();
 
 
-//                double latitude = location.getLatitude();
-//                double longtitude = location.getLongitude();
-//                float zoom = 17.0f;
-//                LatLng markerPosition = new LatLng(latitude, longtitude);
-//                mGoogleMap.clear();
-//                gotolocation(latitude, longtitude);
-//                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markerPosition, zoom));
+            double latitude = location.getLatitude();
+            double longtitude = location.getLongitude();
+            float zoom = 17.0f;
+            LatLng markerPosition = new LatLng(latitude, longtitude);
+           // mGoogleMap.clear();
+            gotolocation(latitude, longtitude);
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markerPosition, zoom));
 
-
+        }
 
 
 
